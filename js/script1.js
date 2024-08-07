@@ -1,4 +1,4 @@
-const apiKey = '22dbd73170msh63be409c1aa1224p183669jsn950fc64b546b'; // Ключ API для доступа к сервису рецептов
+const apiKey = 'apiKey'; // Ключ API для доступа к сервису рецептов замените на ваш
 const apiHost = 'tasty.p.rapidapi.com'; // Хост API для запросов
 const apiUrl = 'https://tasty.p.rapidapi.com/recipes/list'; // Базовый URL для получения списка рецептов
 
@@ -122,11 +122,6 @@ function displayRecipeDetails(recipe) {
     const instructionsList = document.getElementById('recipe-instructions');
     instructionsList.innerHTML = recipe.instructions.map(instruction => `<li>${instruction.display_text}</li>`).join(''); // Инструкции
 
-    // const image = document.getElementById('recipe-image');
-    // image.src = recipe.thumbnail_url; // фото рецепта
-
-    // const video = document.getElementById('recipe-video');
-    // video.src = recipe.original_video_url; // Видео рецепта
 }
 
 // Функция для фильтрации рецептов по тегу и отображения на странице tags.html
@@ -134,36 +129,6 @@ function filterByTag(tagName) {
     localStorage.setItem('selectedTag', tagName); // Сохраняем выбранный тег в localStorage
     window.location.href = 'tags.html'; // Переход на страницу с рецептами по тегу
 }
-
-// Функция для загрузки рецептов по тегу на странице tags.html
-// async function loadRecipesByTag() {
-//     const tagName = localStorage.getItem('selectedTag'); // Получаем выбранный тег из localStorage
-    
-//     if (!tagName) {
-//         console.error('Тег не найден в localStorage');
-//         return;
-//     }
-
-//     try {
-//         // Запрашиваем рецепты, содержащие выбранный тег
-//         const response = await fetch(`${apiUrl}?tags=${tagName}`, {
-//             method: 'GET',
-//             headers: {
-//                 'X-RapidAPI-Key': apiKey,
-//                 'X-RapidAPI-Host': apiHost
-//             }
-//         });
-
-//         if (!response.ok) {
-//             throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
-//         }
-
-//         const data = await response.json(); // Преобразование ответа в формат JSON
-//         displayRecipes(data.results); // Отображаем отфильтрованные рецепты
-//     } catch (error) {
-//         console.error(`Ошибка при фильтрации рецептов по тегу (${tagName}):`, error);
-//     }
-// }
 
 async function loadRecipesByTag() {
     const tagName = localStorage.getItem('selectedTag'); // Получаем выбранный тег из localStorage
