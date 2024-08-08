@@ -1,4 +1,4 @@
-const apiKey = '22dbd73170msh63be409c1aa1224p183669jsn950fc64b546b'; // Ключ API для доступа к сервису рецептов замените на ваш
+const apiKey = 'apiKey'; // Ключ API для доступа к сервису рецептов замените на ваш
 const apiHost = 'tasty.p.rapidapi.com'; // Хост API для запросов
 const apiUrl = 'https://tasty.p.rapidapi.com/recipes/list'; // Базовый URL для получения списка рецептов
 
