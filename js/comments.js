@@ -2,18 +2,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Получение ID рецепта из URL при загрузке страницы
     const urlParams = new URLSearchParams(window.location.search);
-    const recipeID = urlParams.get('id');
+    const recipeID = urlParams.get('id'); // Извлекаем значение параметра 'id' из URL
     if (recipeID) {
-        localStorage.setItem('currentRecipeID', recipeID);
+        localStorage.setItem('currentRecipeID', recipeID); // Сохраняем ID рецепта в LocalStorage
     }
 
     // Получение текущего ID рецепта из LocalStorage
-    const currentRecipeID = localStorage.getItem('currentRecipeID');
-    const commentsContainer = document.querySelector('.single-post__comment');
-    const commentsTitle = document.querySelector('.single-post__comment .widget__title h4');
+    const currentRecipeID = localStorage.getItem('currentRecipeID'); // Читаем ID рецепта из LocalStorage
+    const commentsContainer = document.querySelector('.single-post__comment'); // Находим контейнер для комментариев
+    const commentsTitle = document.querySelector('.single-post__comment .widget__title h4'); // Находим заголовок для количества комментариев
 
     // Получение комментариев из LocalStorage
-    const comments = JSON.parse(localStorage.getItem(`comments_${currentRecipeID}`)) || [];
+    const comments = JSON.parse(localStorage.getItem(`comments_${currentRecipeID}`)) || []; // Получаем комментарии для текущего рецепта, если они есть, иначе создаем
 
     // Функция для отображения комментариев
     function displayComments() {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Проходим по всем комментариям и добавляем их в контейнер
         comments.forEach(comment => {
             const commentItem = document.createElement('div');
-            commentItem.className = 'single-post__comment__item';
+            commentItem.className = 'single-post__comment__item';// Присваиваем класс для стилизации
 
             // Создаем HTML структуру для каждого комментария
             commentItem.innerHTML = `
@@ -44,22 +44,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Добавляем событие клика на иконку "сердце" для увеличения количества лайков
             const heartIcon = commentItem.querySelector('.fa-heart-o');
             if (comment.likes > 0) {
-                heartIcon.classList.add('liked');
+                heartIcon.classList.add('liked'); // Если есть лайки, меняем иконку на "поставленное сердце"
             }
 
-            heartIcon.addEventListener('click', (e) => {
-                e.preventDefault();
-                comment.likes += 1;
-                localStorage.setItem(`comments_${currentRecipeID}`, JSON.stringify(comments));
+            heartIcon.addEventListener('click', (e) => {   
+                e.preventDefault(); // Предотвращаем переход по ссылке
+                comment.likes += 1; // Увеличиваем количество лайков
+                localStorage.setItem(`comments_${currentRecipeID}`, JSON.stringify(comments)); // Сохраняем обновленные комментарии в LocalStorage
                 displayComments(); // Обновляем комментарии
             });
 
-            commentItemsContainer.appendChild(commentItem);
+            commentItemsContainer.appendChild(commentItem); // Добавляем новый комментарий в контейнер  
         });
 
         // Обновляем количество комментариев
         const commentsCount = comments.length;
-        commentsTitle.textContent = `${commentsCount} Comment${commentsCount !== 1 ? 's' : ''}`;
+        commentsTitle.textContent = `${commentsCount} Comment${commentsCount !== 1 ? 's' : ''}`;  // Обновляем заголовок с количеством комментариев
     }
 
     // Отображаем комментарии при загрузке страницы
@@ -81,13 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 name,
                 email,
                 message,
-                date: new Date(),
-                likes: 0
+                date: new Date(),  // Дата отправки комментария
+                likes: 0 // Начальное количество лайков
             };
 
             // Добавляем новый комментарий в массив и сохраняем в LocalStorage
             comments.push(newComment);
-            localStorage.setItem(`comments_${currentRecipeID}`, JSON.stringify(comments));
+            localStorage.setItem(`comments_${currentRecipeID}`, JSON.stringify(comments));  // Сохраняем обновленный список комментариев в LocalStorage
             displayComments(); // Обновляем комментарии
 
             // Очищаем форму после отправки

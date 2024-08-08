@@ -26,7 +26,7 @@ async function fetchRecipes() {
 
 // Функция для отображения рецептов на странице
 function displayRecipes(recipes) {
-    const container = document.getElementById('tag-recipes-container') || document.getElementById('recipes-container');
+    const container = document.getElementById('tag-recipes-container') || document.getElementById('recipes-container'); // tag-recipes-container для страницы tags.html а контейнер recipes-container для страницы categories-list.html
     if (!container) {
         console.error('Контейнер для рецептов не найден');
         return;
@@ -58,8 +58,8 @@ function displayRecipes(recipes) {
         recipe.tags.forEach(tag => {
             const tagButton = document.createElement('button');
             tagButton.textContent = tag.display_name; // Отображаем название тега (display_name)
-            // tagButton.onclick = () => filterByTag(tag.name); // При клике на тег сохраняем тег (name) в localStorage
-            tagButton.onclick = () => filterByTag(tag.display_name);
+            tagButton.onclick = () => filterByTag(tag.name); // При клике на тег сохраняем тег (name) в localStorage
+            
             tags.appendChild(tagButton);
         });
 
@@ -136,35 +136,6 @@ function filterByTag(tagName) {
 }
 
 // Функция для загрузки рецептов по тегу на странице tags.html
-// async function loadRecipesByTag() {
-//     const tagName = localStorage.getItem('selectedTag'); // Получаем выбранный тег из localStorage
-    
-//     if (!tagName) {
-//         console.error('Тег не найден в localStorage');
-//         return;
-//     }
-
-//     try {
-//         // Запрашиваем рецепты, содержащие выбранный тег
-//         const response = await fetch(`${apiUrl}?tags=${tagName}`, {
-//             method: 'GET',
-//             headers: {
-//                 'X-RapidAPI-Key': apiKey,
-//                 'X-RapidAPI-Host': apiHost
-//             }
-//         });
-
-//         if (!response.ok) {
-//             throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
-//         }
-
-//         const data = await response.json(); // Преобразование ответа в формат JSON
-//         displayRecipes(data.results); // Отображаем отфильтрованные рецепты
-//     } catch (error) {
-//         console.error(`Ошибка при фильтрации рецептов по тегу (${tagName}):`, error);
-//     }
-// }
-
 async function loadRecipesByTag() {
     const tagName = localStorage.getItem('selectedTag'); // Получаем выбранный тег из localStorage
 
@@ -178,8 +149,8 @@ async function loadRecipesByTag() {
         const response = await fetch(`${apiUrl}?tags=${tagName}`, {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': apiKey,
-                'X-RapidAPI-Host': apiHost
+                'X-RapidAPI-Key': apiKey, // Устанавливаем ключ API
+                'X-RapidAPI-Host': apiHost // Устанавливаем хост API
             }
         });
 
@@ -188,19 +159,34 @@ async function loadRecipesByTag() {
         }
 
         const data = await response.json(); // Преобразование ответа в формат JSON
-        displayRecipes(data.results); // Отображаем отфильтрованные рецепты
 
-        // Обновляем breadcrumb с названием тега
-        const breadcrumbOption = document.querySelector('.breadcrumb__option span');
-        if (breadcrumbOption) {
-            breadcrumbOption.textContent = `Recipes by tags ${tagName}`;
-        } else {
-            console.error('Элемент breadcrumb__option не найден');
+        if (data.results.length > 0) {
+            // Находим первый рецепт, содержащий тег с названием tagName
+            const recipeWithTag = data.results.find(recipe => 
+                recipe.tags.some(tag => tag.name === tagName)
+            );
+
+            if (recipeWithTag) {
+                // Находим тег в рецепте и получаем его display_name
+                const tag = recipeWithTag.tags.find(tag => tag.name === tagName);
+                const displayName = tag ? tag.display_name : tagName; // Если display_name найден, используем его, иначе используем tagName
+
+                // Обновляем breadcrumb с названием тега
+                const breadcrumbOption = document.querySelector('.breadcrumb__option span');
+                if (breadcrumbOption) {
+                    breadcrumbOption.textContent = `Recipes by tag: ${displayName}`;
+                } else {
+                    console.error('Элемент breadcrumb__option не найден');
+                }
+            }
         }
+
+        displayRecipes(data.results); // Отображаем отфильтрованные рецепты
     } catch (error) {
         console.error(`Ошибка при фильтрации рецептов по тегу (${tagName}):`, error);
     }
 }
+
 
 
 

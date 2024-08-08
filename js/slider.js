@@ -8,10 +8,10 @@ $(document).ready(function() {
                 items: 1 // Показывать 1 элемент на малых экранах
             },
             600: {
-                items: 2 // Показывать 2 элемента на средних экранах
+                items: 3 // Показывать 2 элемента на средних экранах
             },
             1000: {
-                items: 4 // Показывать 4 элемента на больших экранах
+                items: 5 // Показывать 4 элемента на больших экранах
             }
         },
         navText: ['<button type="button" class="owl-prev">‹</button>', '<button type="button" class="owl-next">›</button>']
@@ -19,6 +19,7 @@ $(document).ready(function() {
 
     // API данные
     const apiKey = '22dbd73170msh63be409c1aa1224p183669jsn950fc64b546b';
+    // const apiKey = 'd3f4a66dc7mshcb46c2daf21d9cbp1f86c7jsn095fdd8a4128'; 
     const apiHost = 'tasty.p.rapidapi.com';
     const apiUrl = 'https://tasty.p.rapidapi.com/recipes/list?from=0&size=10';
 
