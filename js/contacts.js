@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Отправка письма с помощью EmailJS
-        emailjs.send('service_ynqynre', 'template_jhk6ttj', templateParams)  // Замените 'service ID' 'template ID' на ваш из EmailJS
+        emailjs.send('service_ynqynre', 'template_jhk6ttj', templateParams) // Замените 'service ID' 'template ID' на ваш из EmailJS
             .then((response) => { // Если отправка прошла успешно
                 console.log('SUCCESS!', response.status, response.text); // Логируем успешный ответ
                 showNotification('Congratulations! Your message has been sent successfully!', false); // Показываем пользователю сообщение об успешной отправке
@@ -57,6 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Устанавливаем таймер на скрытие уведомления через 3 секунды
         setTimeout(() => {
             notification.style.display = 'none'; // Скрываем уведомление
-        }, 3000); // Уведомление исчезнет через 3 секунды
+        }, 5000); // Уведомление исчезнет через 3 секунды
     }
 });
