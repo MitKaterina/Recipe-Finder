@@ -18,7 +18,7 @@ $(document).ready(function() {
     });
 
     // API данные
-    const apiKey = 'apiKey';  // замените на ваши apiKey 
+    const apiKey = '22dbd73170msh63be409c1aa1224p183669jsn950fc64b546b';  // замените на ваши apiKey 
     const apiHost = 'tasty.p.rapidapi.com';
     const apiUrl = 'https://tasty.p.rapidapi.com/recipes/list?from=0&size=10';
 
